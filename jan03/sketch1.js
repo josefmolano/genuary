@@ -95,8 +95,10 @@ function draw() {
         x = r*cos_ang;
         y = r*sin_ang;
         if (i==2){
-            offset_x=-x * max(0,min(timer, 365))/(365);
-            offset_y=-y * max(0,min(timer, 365))/(365);
+            // offset_x=-x * max(0,min(timer, 365))/(365);
+            // offset_y=-y * max(0,min(timer, 365))/(365);
+            offset_x=-x;
+            offset_y=-y;
         }
         // if (planet_ang[i]<-360){
         //     planet_ang[i]=0; 
