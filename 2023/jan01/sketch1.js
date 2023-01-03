@@ -1,50 +1,42 @@
 function setup() {
     WIDTH = 500;
     HEIGHT = 500;
+    NUM_SQUARES = 100;
 
     createCanvas(WIDTH, HEIGHT);
 
-    SQUARES = 5000;
-    SIZE_FACTOR = 3;
-    SPACE_FACTOR = 2.4;
-    ROTATE_FACTOR = 8;
-    SPEED_FACTOR=1;
-
+    squares = []
+    for(var i=0;i<NUM_SQUARES;i++){
+        squares.push(
+            (1/NUM_SQUARES)*(1.35)**i*WIDTH
+            //(1/NUM_SQUARES)*i*WIDTH
+        )
+    }
     frame=0;
-    decrease = false;
 }
 
 function draw() {
     background(0);
 
-    for (var i=0;i<SQUARES;i++){
-        push();
-        translate(width/2, height/2);
-        rotate(-(PI/ROTATE_FACTOR)*i+(decrease==true?-1:1)*frame*SPEED_FACTOR/100);
+    for (var i=0;i<NUM_SQUARES;i++){
         noFill();
-        size = (i**SPACE_FACTOR)*SIZE_FACTOR*(100/(frame*SPEED_FACTOR));
-        if (size>0){
-            stroke(255);
+        stroke(255);
+        if (squares[i]<=0){
+            if(i!=0){
+                squares[i]=squares[i-1]*1.5
+            }
+            else {
+                squares[i]=squares[NUM_SQUARES-1]*1.5
+            }
+        } else {
             rect(
-                -size/2,
-                -size/2,
-                size,
-                size
+                (WIDTH-squares[i])/2,
+                (WIDTH-squares[i])/2,
+                squares[i],
+                squares[i]
             );
         }
-        pop();
+        squares[i]-=(0.1+4*squares[i]/WIDTH);
     }
-    if (decrease){
-        frame++;
-    }
-    else {
-        frame--; 
-    }
-    if (frame*SPEED_FACTOR>1000){
-        decrease = true;
-    }
-    if (frame*SPEED_FACTOR<1){
-        decrease = true;
-    }
-    console.log(frame);
+    frame++;
 }
